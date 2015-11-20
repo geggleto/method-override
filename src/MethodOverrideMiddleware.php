@@ -30,8 +30,10 @@ class MethodOverrideMiddleware
         callable $next)
     {
         if (strtoupper($requestInterface->getMethod()) == 'GET') {
-            $method = $requestInterface->getQueryParams()['_method'];
-            $requestInterface = $requestInterface->withMethod($method);
+            if (!empty($requestInterface->getQueryParams()['_method'])) {
+                $method = $requestInterface->getQueryParams()['_method'];
+                $requestInterface = $requestInterface->withMethod($method);
+            }
         }
 
         if ($requestInterface->getMethod() == 'POST') {
