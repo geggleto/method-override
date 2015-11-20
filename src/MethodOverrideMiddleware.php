@@ -34,6 +34,12 @@ class MethodOverrideMiddleware
             $requestInterface = $requestInterface->withMethod($method);
         }
 
+        if ($requestInterface->getMethod() == 'POST') {
+            if (!empty($requestInterface->getParsedBody()['_method'])) {
+                $requestInterface = $requestInterface->withMethod($requestInterface->getParsedBody()['_method']);
+            }
+        }
+
         return $next($requestInterface, $responseInterface);
     }
 }
