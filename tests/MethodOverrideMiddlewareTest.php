@@ -68,4 +68,21 @@ class MethodOverrideMiddlewareTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('GET', $method);
     }
+
+    public function testHeaderMethodOverride()
+    {
+        $methodOverride = new \Geggleto\Middleware\MethodOverrideMiddleware();
+
+        $request = $this->requestFactory('', 'POST');
+        $request = $request->withHeader("X-Http-Method-Override", "PUT");
+
+        $response = new Slim\Http\Response();
+
+        /** @var $res \Psr\Http\Message\ResponseInterface */
+        $method = $methodOverride($request, $response, function (Request $req, \Slim\Http\Response $res) {
+            return $req->getMethod();
+        });
+
+        $this->assertEquals('PUT', $method);
+    }
 }

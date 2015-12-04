@@ -36,6 +36,12 @@ class MethodOverrideMiddleware
             }
         }
 
+        if ($requestInterface->hasHeader("X-Http-Method-Override")) {
+            if (!empty($requestInterface->getHeader("X-Http-Method-Override")[0])) {
+                $requestInterface = $requestInterface->withMethod($requestInterface->getHeader("X-Http-Method-Override")[0]);
+            }
+        }
+
         if ($requestInterface->getMethod() == 'POST') {
             if (!empty($requestInterface->getParsedBody()['_method'])) {
                 $requestInterface = $requestInterface->withMethod($requestInterface->getParsedBody()['_method']);
