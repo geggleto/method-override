@@ -9,4 +9,7 @@ Would actually turn into a POST request
 
 OR
 A POST route may provide a _method='' override
+
+OR
+You can specify the header X-Http-Method-Override to override
 ```
